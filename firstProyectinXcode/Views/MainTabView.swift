@@ -24,7 +24,7 @@ struct MainTabView: View {
                 }
             
             // Pestaña de Grupos
-            GroupsPage()
+            GroupMainPage()
                 .tabItem {
                     Label("Grupos", systemImage: "person.2")
                 }
