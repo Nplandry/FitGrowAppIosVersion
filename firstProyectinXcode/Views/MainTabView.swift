@@ -1,40 +1,47 @@
 import SwiftUI
 
 struct MainTabView: View {
-    // Estado para gestionar la autenticación
-    @State private var isAuthenticated = false
+    @Binding var isAuthenticated: Bool
     
     var body: some View {
         TabView {
-            // Vista de Home, pasando el estado de autenticación como binding
+            // Pestaña de inicio
             HomePage(isAuthenticated: $isAuthenticated)
                 .tabItem {
                     Label("Inicio", systemImage: "house")
                 }
             
-            // Vista de Feed
+            // Pestaña de Feed
             FeedPage()
                 .tabItem {
                     Label("Feed", systemImage: "list.bullet")
                 }
             
-            // Vista de Estadísticas
+            // Pestaña de Estadísticas
             EstadisticsPage()
                 .tabItem {
                     Label("Estadísticas", systemImage: "chart.bar")
                 }
             
-            // Vista de Perfil
+            // Pestaña de Grupos
+            GroupsPage()
+                .tabItem {
+                    Label("Grupos", systemImage: "person.2")
+                }
+            
+            // Pestaña de Perfil
             ProfilePage()
                 .tabItem {
                     Label("Perfil", systemImage: "person")
                 }
         }
+        .padding(.bottom, -50) 
+        
     }
 }
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabView()
+        MainTabView(isAuthenticated: .constant(true))
     }
 }
