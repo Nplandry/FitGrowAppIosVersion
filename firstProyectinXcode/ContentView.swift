@@ -8,14 +8,12 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if isAuthenticated {
-                    Text("Bienvenido al sistema!")
-                        .font(.title)
-                        .padding()
-                    
-                    // Aquí puedes agregar más vistas para la aplicación cuando el usuario esté autenticado
+                    // Asegúrate de pasar el @Binding isAuthenticated al componente HomePage
+                    HomePage(isAuthenticated: $isAuthenticated)
                 } else {
+                    // Si no está autenticado, muestra LoginPage
                     LoginPage(isAuthenticated: $isAuthenticated, isRegistering: $isRegistering)
-                        .navigationBarHidden(true) // Si no quieres que aparezca la barra de navegación
+                        .navigationBarHidden(true) // Oculta la barra de navegación en LoginPage
                 }
             }
             .padding()

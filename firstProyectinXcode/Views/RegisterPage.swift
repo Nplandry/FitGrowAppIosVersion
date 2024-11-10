@@ -63,9 +63,13 @@ struct RegisterPage: View {
                     .progressViewStyle(CircularProgressViewStyle())
                     .padding()
             }
+ 
         }
         .padding()
     }
+    
+
+    
 
     // Función de registro con Firebase
     private func handleRegister() {
