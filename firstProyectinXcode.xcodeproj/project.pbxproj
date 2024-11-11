@@ -14,6 +14,8 @@
 		842EF1BC2CE0563D00F84EDE /* firstProyectinXcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1BB2CE0563D00F84EDE /* firstProyectinXcodeTests.swift */; };
 		842EF1C62CE0563D00F84EDE /* firstProyectinXcodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C52CE0563D00F84EDE /* firstProyectinXcodeUITests.swift */; };
 		842EF1C82CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */; };
+		843E82C02CE2C04900E6BF53 /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */; };
+		843E82C22CE2C12200E6BF53 /* OpcionesGrupoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */; };
 		84E3E4E92CE14D1D0029CBFD /* UserBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4E82CE14D1D0029CBFD /* UserBar.swift */; };
 		84E3E4EB2CE14D430029CBFD /* ProgressDaysBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4EA2CE14D430029CBFD /* ProgressDaysBar.swift */; };
 		84E3E4ED2CE14EAB0029CBFD /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */; };
@@ -89,6 +91,8 @@
 		842EF1C12CE0563D00F84EDE /* firstProyectinXcodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = firstProyectinXcodeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		842EF1C52CE0563D00F84EDE /* firstProyectinXcodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITests.swift; sourceTree = "<group>"; };
 		842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
+		843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcionesGrupoView.swift; sourceTree = "<group>"; };
 		84E3E4E82CE14D1D0029CBFD /* UserBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBar.swift; sourceTree = "<group>"; };
 		84E3E4EA2CE14D430029CBFD /* ProgressDaysBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDaysBar.swift; sourceTree = "<group>"; };
 		84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,15 @@
 			path = firstProyectinXcodeUITests;
 			sourceTree = "<group>";
 		};
+		843E82BE2CE2C01300E6BF53 /* DetailsGroups */ = {
+			isa = PBXGroup;
+			children = (
+				843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */,
+				843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */,
+			);
+			path = DetailsGroups;
+			sourceTree = "<group>";
+		};
 		84E3E4E12CE14CB70029CBFD /* Estadistics */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +292,7 @@
 		84E457652CE06F350080E7CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				843E82BE2CE2C01300E6BF53 /* DetailsGroups */,
 				84E4576B2CE070EF0080E7CF /* MainTabView.swift */,
 				84E4576D2CE0711B0080E7CF /* AuthStackView.swift */,
 				84E4576F2CE0713A0080E7CF /* HomePage.swift */,
@@ -489,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E4577E2CE072A30080E7CF /* CustomButton.swift in Sources */,
+				843E82C22CE2C12200E6BF53 /* OpcionesGrupoView.swift in Sources */,
 				84E3E4ED2CE14EAB0029CBFD /* GroupView.swift in Sources */,
 				84E457822CE075810080E7CF /* RegisterPage.swift in Sources */,
 				84E457762CE071D50080E7CF /* ProfilePage.swift in Sources */,
@@ -507,6 +522,7 @@
 				84E4577C2CE072710080E7CF /* CustomTextField.swift in Sources */,
 				842EF1AB2CE0563400F84EDE /* firstProyectinXcodeApp.swift in Sources */,
 				84E4576C2CE070EF0080E7CF /* MainTabView.swift in Sources */,
+				843E82C02CE2C04900E6BF53 /* GroupDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

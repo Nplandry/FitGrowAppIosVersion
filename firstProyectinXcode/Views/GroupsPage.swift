@@ -80,7 +80,7 @@ struct GroupMainPage: View {
             .padding()
             
             List(filteredGroups) { group in
-                NavigationLink(destination: GroupDetailsView(group: group)) {
+                NavigationLink(destination: GroupDetailsView()) {
                     VStack(alignment: .leading) {
                         Text(group.name)
                             .font(.headline)
@@ -152,7 +152,7 @@ struct GroupMainPage: View {
         let db = Firestore.firestore()
         db.collection("groups").document(groupId).collection("participantes").getDocuments { snapshot, _ in
             guard let docs = snapshot?.documents else {
-                completion([]) // Retorna vacío si no hay participantes
+                completion([])
                 return
             }
             
@@ -165,19 +165,6 @@ struct GroupMainPage: View {
     }
 }
 
-struct GroupDetailsView: View {
-    let group: GroupMainPage.Group
-    
-    var body: some View {
-        Text("Detalles del grupo \(group.name)")
-    }
-}
-
-struct OpcionesGrupoView: View {
-    var body: some View {
-        Text("Opciones del grupo")
-    }
-}
 
 struct GroupMainPage_Previews: PreviewProvider {
     static var previews: some View {
