@@ -16,6 +16,8 @@
 		842EF1C82CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */; };
 		843E82C02CE2C04900E6BF53 /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */; };
 		843E82C22CE2C12200E6BF53 /* OpcionesGrupoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */; };
+		846DF4162CE2D02E001C927E /* CrearGrupoPrivadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */; };
+		846DF4182CE2D044001C927E /* UnirseAGrupoPrivadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF4172CE2D044001C927E /* UnirseAGrupoPrivadoView.swift */; };
 		84E3E4E92CE14D1D0029CBFD /* UserBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4E82CE14D1D0029CBFD /* UserBar.swift */; };
 		84E3E4EB2CE14D430029CBFD /* ProgressDaysBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4EA2CE14D430029CBFD /* ProgressDaysBar.swift */; };
 		84E3E4ED2CE14EAB0029CBFD /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */; };
@@ -93,6 +95,8 @@
 		842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
 		843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcionesGrupoView.swift; sourceTree = "<group>"; };
+		846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearGrupoPrivadoView.swift; sourceTree = "<group>"; };
+		846DF4172CE2D044001C927E /* UnirseAGrupoPrivadoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnirseAGrupoPrivadoView.swift; sourceTree = "<group>"; };
 		84E3E4E82CE14D1D0029CBFD /* UserBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBar.swift; sourceTree = "<group>"; };
 		84E3E4EA2CE14D430029CBFD /* ProgressDaysBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDaysBar.swift; sourceTree = "<group>"; };
 		84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
@@ -254,7 +258,9 @@
 		84E3E4E32CE14CCD0029CBFD /* GroupComponents */ = {
 			isa = PBXGroup;
 			children = (
+				846DF4172CE2D044001C927E /* UnirseAGrupoPrivadoView.swift */,
 				84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */,
+				846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */,
 			);
 			path = GroupComponents;
 			sourceTree = "<group>";
@@ -509,9 +515,11 @@
 				84E457762CE071D50080E7CF /* ProfilePage.swift in Sources */,
 				84E3E4EF2CE14EDA0029CBFD /* ImagePickerView.swift in Sources */,
 				84E3E4E92CE14D1D0029CBFD /* UserBar.swift in Sources */,
+				846DF4182CE2D044001C927E /* UnirseAGrupoPrivadoView.swift in Sources */,
 				84E4576E2CE0711B0080E7CF /* AuthStackView.swift in Sources */,
 				84E457702CE0713A0080E7CF /* HomePage.swift in Sources */,
 				842EF1AD2CE0563400F84EDE /* ContentView.swift in Sources */,
+				846DF4162CE2D02E001C927E /* CrearGrupoPrivadoView.swift in Sources */,
 				84E4576A2CE070A10080E7CF /* AuthState.swift in Sources */,
 				84E457802CE074DC0080E7CF /* LoginPage.swift in Sources */,
 				84E457782CE072170080E7CF /* ProfilePhotoPage.swift in Sources */,
