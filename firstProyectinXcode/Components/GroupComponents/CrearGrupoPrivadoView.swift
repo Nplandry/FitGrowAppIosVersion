@@ -204,7 +204,7 @@ struct CrearGrupoPrivadoView: View {
 }
 
 
-class UserContext: ObservableObject {
+/*class UserContext: ObservableObject {
     @Published var userName: String? = nil
     private var listener: AuthStateDidChangeListenerHandle?
     
@@ -248,3 +248,4 @@ class UserContext: ObservableObject {
         }
     }
 }
+*/

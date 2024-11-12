@@ -18,6 +18,7 @@
 		843E82C22CE2C12200E6BF53 /* OpcionesGrupoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */; };
 		846DF4162CE2D02E001C927E /* CrearGrupoPrivadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */; };
 		846DF4182CE2D044001C927E /* UnirseAGrupoPrivadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF4172CE2D044001C927E /* UnirseAGrupoPrivadoView.swift */; };
+		846DF41D2CE2D82F001C927E /* UserContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF41C2CE2D82F001C927E /* UserContext.swift */; };
 		84E3E4E92CE14D1D0029CBFD /* UserBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4E82CE14D1D0029CBFD /* UserBar.swift */; };
 		84E3E4EB2CE14D430029CBFD /* ProgressDaysBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4EA2CE14D430029CBFD /* ProgressDaysBar.swift */; };
 		84E3E4ED2CE14EAB0029CBFD /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */; };
@@ -97,6 +98,7 @@
 		843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcionesGrupoView.swift; sourceTree = "<group>"; };
 		846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearGrupoPrivadoView.swift; sourceTree = "<group>"; };
 		846DF4172CE2D044001C927E /* UnirseAGrupoPrivadoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnirseAGrupoPrivadoView.swift; sourceTree = "<group>"; };
+		846DF41C2CE2D82F001C927E /* UserContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContext.swift; sourceTree = "<group>"; };
 		84E3E4E82CE14D1D0029CBFD /* UserBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBar.swift; sourceTree = "<group>"; };
 		84E3E4EA2CE14D430029CBFD /* ProgressDaysBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDaysBar.swift; sourceTree = "<group>"; };
 		84E3E4EC2CE14EAB0029CBFD /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		842EF1A92CE0563400F84EDE /* firstProyectinXcode */ = {
 			isa = PBXGroup;
 			children = (
+				846DF41B2CE2D815001C927E /* Context */,
 				84E457682CE06F7E0080E7CF /* Resources */,
 				84E457672CE06F680080E7CF /* Components */,
 				84E457662CE06F570080E7CF /* Models */,
@@ -239,6 +242,14 @@
 				843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */,
 			);
 			path = DetailsGroups;
+			sourceTree = "<group>";
+		};
+		846DF41B2CE2D815001C927E /* Context */ = {
+			isa = PBXGroup;
+			children = (
+				846DF41C2CE2D82F001C927E /* UserContext.swift */,
+			);
+			path = Context;
 			sourceTree = "<group>";
 		};
 		84E3E4E12CE14CB70029CBFD /* Estadistics */ = {
@@ -524,6 +535,7 @@
 				84E457802CE074DC0080E7CF /* LoginPage.swift in Sources */,
 				84E457782CE072170080E7CF /* ProfilePhotoPage.swift in Sources */,
 				84E457722CE071620080E7CF /* FeedPage.swift in Sources */,
+				846DF41D2CE2D82F001C927E /* UserContext.swift in Sources */,
 				84E3E5032CE171B50029CBFD /* GroupsPage.swift in Sources */,
 				84E3E4EB2CE14D430029CBFD /* ProgressDaysBar.swift in Sources */,
 				84E457742CE0719B0080E7CF /* EstadisticsPage.swift in Sources */,
