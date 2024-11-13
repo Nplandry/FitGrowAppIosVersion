@@ -15,6 +15,7 @@
 		842EF1C62CE0563D00F84EDE /* firstProyectinXcodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C52CE0563D00F84EDE /* firstProyectinXcodeUITests.swift */; };
 		842EF1C82CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */; };
 		842F27FD2CE4263A001F49B3 /* DaysCalendarBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F27FC2CE4263A001F49B3 /* DaysCalendarBar.swift */; };
+		842F27FF2CE437B1001F49B3 /* GroupContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F27FE2CE437B1001F49B3 /* GroupContext.swift */; };
 		843E82C02CE2C04900E6BF53 /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */; };
 		843E82C22CE2C12200E6BF53 /* OpcionesGrupoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */; };
 		846DF4162CE2D02E001C927E /* CrearGrupoPrivadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */; };
@@ -96,6 +97,7 @@
 		842EF1C52CE0563D00F84EDE /* firstProyectinXcodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITests.swift; sourceTree = "<group>"; };
 		842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		842F27FC2CE4263A001F49B3 /* DaysCalendarBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DaysCalendarBar.swift; path = firstProyectinXcode/Context/DaysCalendarBar.swift; sourceTree = SOURCE_ROOT; };
+		842F27FE2CE437B1001F49B3 /* GroupContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContext.swift; sourceTree = "<group>"; };
 		843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
 		843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcionesGrupoView.swift; sourceTree = "<group>"; };
 		846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearGrupoPrivadoView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				846DF41C2CE2D82F001C927E /* UserContext.swift */,
+				842F27FE2CE437B1001F49B3 /* GroupContext.swift */,
 			);
 			path = Context;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				84E3E5032CE171B50029CBFD /* GroupsPage.swift in Sources */,
 				84E3E4EB2CE14D430029CBFD /* ProgressDaysBar.swift in Sources */,
 				84E457742CE0719B0080E7CF /* EstadisticsPage.swift in Sources */,
+				842F27FF2CE437B1001F49B3 /* GroupContext.swift in Sources */,
 				84E4577C2CE072710080E7CF /* CustomTextField.swift in Sources */,
 				842EF1AB2CE0563400F84EDE /* firstProyectinXcodeApp.swift in Sources */,
 				84E4576C2CE070EF0080E7CF /* MainTabView.swift in Sources */,

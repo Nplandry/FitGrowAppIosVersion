@@ -3,6 +3,7 @@ import Firebase
 import FirebaseFirestore
 
 struct EstadisticsView: View {
+    
     @State private var groupsData: [Group] = []
     @State private var participantsData: [ParticipantsData] = []
     @State private var liftsData: [Lift] = []
@@ -10,29 +11,29 @@ struct EstadisticsView: View {
     @State private var loading: Bool = true
     
     private var db = Firestore.firestore()
-    
+
     struct Group: Identifiable {
         let id: String
         let nombre: String
-        let descripcion: String
+        let descripcion: String?
         let etiquetas: [String]
         let groupId: String
         let isPrivate: Bool
     }
-    
+
     struct ParticipantsData {
         let groupId: String
         let participants: [Participant]
         let nombre: String
     }
-    
+
     struct Participant: Identifiable {
         let id: String
         let nombre: String
     }
-    
+
     struct Lift: Identifiable {
-        let id = UUID()
+        var id: String?
         let groupId: String
         let nombre: String
         let nombreEjercicio: String
@@ -54,11 +55,13 @@ struct EstadisticsView: View {
                     .padding()
             } else {
                 ScrollView {
-                    DaysCalendarBar(lifts: liftsData, renderItem: renderLiftItem)
                     VStack {
                         Text("Progresión de tus ejercicios:")
                             .font(.title)
                             .padding(.top)
+                        
+                        
+
                         ForEach(calcularProgresionPorEjercicio(), id: \.nombreEjercicio) { liftProgresado in
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("\(liftProgresado.nombreEjercicio):")
@@ -80,18 +83,16 @@ struct EstadisticsView: View {
         .onAppear(perform: loadData)
         .padding()
     }
-    
+
     func calcularProgresionPorEjercicio() -> [Lift] {
-        // Agrupar lifts por ejercicio
         let liftsPorEjercicio = Dictionary(grouping: liftsData) { $0.nombreEjercicio }
-        
-        // Calcular progresión
         var liftsProgresados: [Lift] = []
-        
+
         for (_, lifts) in liftsPorEjercicio {
             if let liftMasPesado = obtenerLiftMasPesado(lifts: lifts) {
                 let progresion = siguienteCarga(lift: liftMasPesado)
                 let liftProgresado = Lift(
+                    id: liftMasPesado.id,
                     groupId: liftMasPesado.groupId,
                     nombre: liftMasPesado.nombre,
                     nombreEjercicio: liftMasPesado.nombreEjercicio,
@@ -102,24 +103,24 @@ struct EstadisticsView: View {
                 liftsProgresados.append(liftProgresado)
             }
         }
-        
+
         return liftsProgresados
     }
-    
+
     func siguienteCarga(lift: Lift) -> (nuevoPeso: Int, nuevasRepeticiones: Int) {
         var nuevoPeso = lift.peso
         var nuevasRepeticiones = lift.repeticiones
-        
+
         if lift.repeticiones > 7 {
             nuevoPeso += 5
             nuevasRepeticiones = 3
         } else {
             nuevasRepeticiones += 1
         }
-        
+
         return (nuevoPeso, nuevasRepeticiones)
     }
-    
+
     func obtenerLiftMasPesado(lifts: [Lift]) -> Lift? {
         let maxPeso = lifts.map { $0.peso }.max() ?? 0
         let liftsConMaxPeso = lifts.filter { $0.peso == maxPeso }
@@ -129,7 +130,7 @@ struct EstadisticsView: View {
     func loadData() {
         loading = true
         error = nil
-        
+
         fetchGroups { groups in
             self.groupsData = groups
             fetchParticipants(for: groups) { participantsData in
@@ -141,64 +142,76 @@ struct EstadisticsView: View {
             }
         }
     }
-    
+
     func fetchGroups(completion: @escaping ([Group]) -> Void) {
-        db.collection("groups").getDocuments { snapshot, err in
-            if let err = err {
-                self.error = "Error al cargar los grupos: \(err.localizedDescription)"
+        let groupsRef = db.collection("groups")
+        
+        groupsRef.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error al obtener los grupos:", error)
+                self.error = "Error al obtener los grupos"
                 self.loading = false
             } else {
-                let groups = snapshot?.documents.map { doc in
-                    Group(
-                        id: doc.documentID,
-                        nombre: doc["nombre"] as? String ?? "",
-                        descripcion: doc["descripcion"] as? String ?? "",
-                        etiquetas: doc["etiquetas"] as? [String] ?? [],
-                        groupId: doc["groupId"] as? String ?? "",
-                        isPrivate: doc["isPrivate"] as? Bool ?? false
+                var grupos: [Group] = []
+                snapshot?.documents.forEach { doc in
+                    let groupData = doc.data()
+                    let groupId = doc.documentID
+                    
+                    let grupo = Group(
+                        id: groupId,
+                        nombre: groupData["nombre"] as? String ?? "Nombre no disponible",
+                        descripcion: groupData["descripcion"] as? String,
+                        etiquetas: groupData["etiquetas"] as? [String] ?? [],
+                        groupId: groupId,
+                        isPrivate: groupData["isPrivate"] as? Bool ?? false
                     )
-                } ?? []
-                completion(groups)
+                    grupos.append(grupo)
+                }
+                completion(grupos)
             }
         }
     }
 
-    func fetchParticipants(for groups: [Group], completion: @escaping ([ParticipantsData]) -> Void) {
+    private func fetchParticipants(for groups: [Group], completion: @escaping ([ParticipantsData]) -> Void) {
         var participantsData: [ParticipantsData] = []
-        
+
+        let dispatchGroup = DispatchGroup()
+
         for group in groups {
-            db.collection("groups").document(group.id).collection("participants").getDocuments { snapshot, err in
-                if let err = err {
-                    self.error = "Error al cargar los participantes: \(err.localizedDescription)"
-                    self.loading = false
+            dispatchGroup.enter()
+            db.collection("groups").document(group.id).collection("participantes").getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error al obtener los participantes:", error)
                 } else {
-                    let participants = snapshot?.documents.map { doc in
-                        Participant(
-                            id: doc.documentID,
-                            nombre: doc["nombre"] as? String ?? ""
-                        )
+                    let participantes = snapshot?.documents.map { doc in
+                        Participant(id: doc.documentID, nombre: doc.data()["nombre"] as? String ?? "Nombre no disponible")
                     } ?? []
-                    
-                    participantsData.append(ParticipantsData(groupId: group.id, participants: participants, nombre: group.nombre))
+                    participantsData.append(ParticipantsData(groupId: group.id, participants: participantes, nombre: group.nombre))
                 }
-                if participantsData.count == groups.count {
-                    completion(participantsData)
-                }
+                dispatchGroup.leave()
             }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            completion(participantsData)
         }
     }
 
     func fetchLiftsData(for groups: [Group], completion: @escaping ([Lift]) -> Void) {
         var liftsData: [Lift] = []
-        
+
+        let dispatchGroup = DispatchGroup()
+
         for group in groups {
-            db.collection("groups").document(group.id).collection("lifts").getDocuments { snapshot, err in
+            dispatchGroup.enter()
+            db.collection("groups").document(group.id).collection("ejercicios").getDocuments { snapshot, err in
                 if let err = err {
                     self.error = "Error al cargar los lifts: \(err.localizedDescription)"
                     self.loading = false
                 } else {
                     let lifts = snapshot?.documents.map { doc in
                         Lift(
+                            id: doc.documentID,
                             groupId: doc["groupId"] as? String ?? "",
                             nombre: doc["nombre"] as? String ?? "",
                             nombreEjercicio: doc["nombreEjercicio"] as? String ?? "",
@@ -207,55 +220,16 @@ struct EstadisticsView: View {
                             timestamp: doc["timestamp"] as? Timestamp ?? Timestamp()
                         )
                     } ?? []
-                    
+
                     liftsData.append(contentsOf: lifts)
                 }
-                if liftsData.count == groups.count {
-                    completion(liftsData)
-                }
+                dispatchGroup.leave()
             }
         }
-    }
-    
-    func renderLiftItem(lift: Lift) -> AnyView {
-        AnyView(
-            VStack {
-                Text("\(lift.nombreEjercicio): \(lift.peso) kg x \(lift.repeticiones) repeticiones")
-                    .font(.subheadline)
-                    .padding(.bottom, 2)
-                Text("Fecha: \(lift.timestamp.dateValue(), formatter: DateFormatter.shortDateFormatter)")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-            }
-            .padding()
-            .background(Color.blue.opacity(0.1))
-            .cornerRadius(10)
-            .padding([.top, .bottom], 5)
-        )
-    }
-}
 
-struct DaysCalendarBar: View {
-    var lifts: [EstadisticsView.Lift]
-    var renderItem: (EstadisticsView.Lift) -> AnyView
-    
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(lifts) { lift in
-                    renderItem(lift)
-                }
-            }
+        dispatchGroup.notify(queue: .main) {
+            completion(liftsData)
         }
-    }
-}
-
-extension DateFormatter {
-    static var shortDateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        return formatter
     }
 }
 
@@ -264,4 +238,3 @@ struct EstadisticsView_Previews: PreviewProvider {
         EstadisticsView()
     }
 }
- 
