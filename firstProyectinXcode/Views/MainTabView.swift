@@ -3,10 +3,8 @@ import SwiftUI
 struct MainTabView: View {
     @Binding var isAuthenticated: Bool
     
-    let sampleLifts: [Lift] = [
-        Lift(id: "1", nombreEjercicio: "Squat", peso: 100, repeticiones: 5, timestamp: Date()),
-        Lift(id: "2", nombreEjercicio: "Deadlift", peso: 120, repeticiones: 4, timestamp: Date())
-    ]
+    // Datos de ejemplo para los lifts
+   
     
     var body: some View {
         TabView {
@@ -22,8 +20,8 @@ struct MainTabView: View {
                     Label("Feed", systemImage: "list.bullet")
                 }
             
-            // Pestaña de Estadísticas
-            DaysCalendarBar(lifts: sampleLifts)
+            // Pestaña de Estadísticas (se pasa el array de lifts)
+            DaysCalendarBar()
                 .tabItem {
                     Label("Estadísticas", systemImage: "chart.bar")
                 }

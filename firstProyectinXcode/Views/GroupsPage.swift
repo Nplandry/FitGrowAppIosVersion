@@ -1,6 +1,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 struct GroupMainPage: View {
     @State private var filter: FilterType = .publicGroups
@@ -8,11 +9,12 @@ struct GroupMainPage: View {
     @State private var loading = true
     @State private var error: String? = nil
     @State private var userName: String = "Invitado"
-    
+    @State private var userProfileImageURL: String? = nil // Nueva propiedad para la URL de la imagen de perfil
+
     enum FilterType {
         case all, privateGroups, publicGroups
     }
-    
+
     struct Group: Identifiable {
         let id: String
         let name: String
@@ -22,27 +24,25 @@ struct GroupMainPage: View {
         let creatorId: String
         let participantes: [Participante]
     }
-    
+
     struct Participante: Identifiable {
         let id: String
         let nombre: String
     }
-    
+
     var filteredGroups: [Group] {
         groupsData.filter { group in
             switch filter {
             case .privateGroups:
-                //No retorna nada por valor nulo
                 return group.isPrivate && group.participantes.contains(where: { $0.nombre == userName })
             case .publicGroups:
-                //Esta tomando todos los grupos publicos!
                 return !group.isPrivate
             case .all:
                 return true
             }
         }
     }
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -57,6 +57,14 @@ struct GroupMainPage: View {
                 }
             }
             .onAppear(perform: fetchGroups)
+            .onAppear {
+                if let userId = Auth.auth().currentUser?.uid {
+                    UserService.shared.loadUserData(userId: userId) { name, imageURL in
+                        self.userName = name
+                        self.userProfileImageURL = imageURL // Actualiza la URL de la imagen de perfil
+                    }
+                }
+            }
             .navigationTitle("Grupos")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -69,7 +77,7 @@ struct GroupMainPage: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private func GroupListView() -> some View {
         VStack {
@@ -79,9 +87,9 @@ struct GroupMainPage: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-            
+
             List(filteredGroups) { group in
-                NavigationLink(destination: GroupDetailsView()) {
+                NavigationLink(destination: GroupDetailsView(groupId: group.id)) {
                     VStack(alignment: .leading) {
                         Text(group.name)
                             .font(.headline)
@@ -99,11 +107,11 @@ struct GroupMainPage: View {
         }
         .padding()
     }
-    
+
     private func fetchGroups() {
         loading = true
         error = nil
-        
+
         let db = Firestore.firestore()
         db.collection("groups").getDocuments { snapshot, err in
             if let err = err {
@@ -111,19 +119,19 @@ struct GroupMainPage: View {
                 self.loading = false
                 return
             }
-            
+
             guard let documents = snapshot?.documents else {
                 self.error = "No se encontraron grupos"
                 self.loading = false
                 return
             }
-            
+
             var tempGroups: [Group] = []
             let dispatchGroup = DispatchGroup()
-            
+
             for doc in documents {
                 dispatchGroup.enter()
-                
+
                 let data = doc.data()
                 fetchParticipantes(groupId: doc.documentID) { participantes in
                     let group = Group(
@@ -135,19 +143,19 @@ struct GroupMainPage: View {
                         creatorId: data["creatorId"] as? String ?? "",
                         participantes: participantes
                     )
-                    
+
                     tempGroups.append(group)
                     dispatchGroup.leave()
                 }
             }
-            
+
             dispatchGroup.notify(queue: .main) {
                 self.groupsData = tempGroups
                 self.loading = false
             }
         }
     }
-    
+
     private func fetchParticipantes(groupId: String, completion: @escaping ([Participante]) -> Void) {
         let db = Firestore.firestore()
         db.collection("groups").document(groupId).collection("participantes").getDocuments { snapshot, _ in
@@ -155,16 +163,16 @@ struct GroupMainPage: View {
                 completion([])
                 return
             }
-            
+
             let participantes = docs.map { doc in
                 Participante(id: doc.documentID, nombre: doc.data()["nombre"] as? String ?? "Nombre no disponible")
             }
-            
+
             completion(participantes)
         }
     }
 }
-     
+
 struct GroupMainPage_Previews: PreviewProvider {
     static var previews: some View {
         GroupMainPage()

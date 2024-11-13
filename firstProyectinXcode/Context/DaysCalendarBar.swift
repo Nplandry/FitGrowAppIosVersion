@@ -1,16 +1,20 @@
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
 
 struct DaysCalendarBar: View {
     @State private var selectedDay = Date()
     @State private var currentWeekIndex = 0
     @State private var selectedWeek: [Date] = []
     @State private var filteredLifts: [Lift] = []
+    @State private var allLifts: [Lift] = [] // Aquí almacenamos todos los lifts de todos los grupos
+    @State private var loading = true
+    @State private var error: String? = nil
 
-    let lifts: [Lift]
-
-    // Color dinámico dependiendo del modo
     @Environment(\.colorScheme) var colorScheme
     
+    private var db = Firestore.firestore() // Firestore instance
+
     var body: some View {
         ScrollView {
             VStack {
@@ -58,7 +62,7 @@ struct DaysCalendarBar: View {
                 .padding(.top)
 
                 // Componente Planificador de Carga
-                PlanificadorDeCarga(lifts: lifts)
+                PlanificadorDeCarga(lifts: allLifts)
 
                 // Mostrar lifts filtrados
                 VStack {
@@ -75,6 +79,11 @@ struct DaysCalendarBar: View {
 
             }
             .onAppear(perform: loadWeekDates)
+            .onAppear {
+                if let userId = Auth.auth().currentUser?.uid {
+                    loadAllLifts() // Cargar todos los lifts
+                }
+            }
         }
         .background(colorScheme == .dark ? Color.black : Color.white) // Fondo general
     }
@@ -102,13 +111,55 @@ struct DaysCalendarBar: View {
 
     private func setSelectedDay(_ day: Date) {
         selectedDay = day
-        filteredLifts = filterLiftsByDate(lifts: lifts, selectedDay: day)
+        filteredLifts = filterLiftsByDate(lifts: allLifts, selectedDay: day)
     }
 
     private func filterLiftsByDate(lifts: [Lift], selectedDay: Date) -> [Lift] {
+        let calendar = Calendar.current
+
+        // Normalizar la fecha seleccionada (establecer la hora a las 00:00:00)
+        let startOfDay = calendar.startOfDay(for: selectedDay)
+
         return lifts.filter { lift in
             let liftDate = lift.timestamp
-            return Calendar.current.isDate(liftDate, inSameDayAs: selectedDay)
+            // Normalizar la fecha del lift (establecer la hora a las 00:00:00)
+            let startOfLiftDay = calendar.startOfDay(for: liftDate)
+
+            // Comparar solo las fechas (sin horas)
+            return startOfLiftDay == startOfDay
+        }
+    }
+
+    private func loadAllLifts() {
+        let db = Firestore.firestore()
+        db.collection("lifts").getDocuments { snapshot, error in
+            if let error = error {
+                self.error = "Error al cargar los lifts: \(error.localizedDescription)"
+                self.loading = false
+                return
+            }
+
+            guard let documents = snapshot?.documents else {
+                self.error = "No se encontraron lifts"
+                self.loading = false
+                return
+            }
+
+            var tempLifts: [Lift] = []
+            for doc in documents {
+                let data = doc.data()
+                if let nombreEjercicio = data["nombreEjercicio"] as? String,
+                   let peso = data["peso"] as? Int,
+                   let repeticiones = data["repeticiones"] as? Int,
+                   let timestamp = data["timestamp"] as? Timestamp,
+                   let nombre = data["nombre"] as? String, // Extraemos el nombre del usuario
+                   let groupId = data["groupId"] as? String { // Asegúrate de incluir el groupId
+                    let lift = Lift(id: doc.documentID, nombreEjercicio: nombreEjercicio, peso: peso, repeticiones: repeticiones, timestamp: timestamp.dateValue(), nombreUsuario: nombre, groupId: groupId)
+                    tempLifts.append(lift)
+                }
+            }
+            self.allLifts = tempLifts // Guardar todos los lifts de todos los grupos
+            self.loading = false
         }
     }
 }
@@ -119,6 +170,8 @@ struct Lift: Identifiable {
     let peso: Int
     let repeticiones: Int
     let timestamp: Date
+    let nombreUsuario: String // Campo que guarda el nombre del usuario que realizó el ejercicio
+    let groupId: String // ID del grupo al que pertenece el lift
 }
 
 struct PlanificadorDeCarga: View {
@@ -137,10 +190,6 @@ struct PlanificadorDeCarga: View {
 
 struct DaysCalendarBar_Previews: PreviewProvider {
     static var previews: some View {
-        let sampleLifts: [Lift] = [
-            Lift(id: "1", nombreEjercicio: "Squat", peso: 100, repeticiones: 5, timestamp: Date()),
-            Lift(id: "2", nombreEjercicio: "Deadlift", peso: 120, repeticiones: 4, timestamp: Date())
-        ]
-        DaysCalendarBar(lifts: sampleLifts)
+        DaysCalendarBar() // No se pasa lifts desde el exterior
     }
 }
