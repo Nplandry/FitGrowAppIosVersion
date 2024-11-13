@@ -12,13 +12,13 @@ struct MainTabView: View {
                 }
             
             // Pestaña de Feed
-            FeedPage()
+            FeedView()
                 .tabItem {
                     Label("Feed", systemImage: "list.bullet")
                 }
             
             // Pestaña de Estadísticas
-            EstadisticsPage()
+            EstadisticsView()
                 .tabItem {
                     Label("Estadísticas", systemImage: "chart.bar")
                 }

@@ -1,7 +1,6 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
-import Firebase
 
 struct GroupMainPage: View {
     @State private var filter: FilterType = .publicGroups
@@ -33,8 +32,10 @@ struct GroupMainPage: View {
         groupsData.filter { group in
             switch filter {
             case .privateGroups:
+                //No retorna nada por valor nulo
                 return group.isPrivate && group.participantes.contains(where: { $0.nombre == userName })
             case .publicGroups:
+                //Esta tomando todos los grupos publicos!
                 return !group.isPrivate
             case .all:
                 return true
@@ -117,12 +118,11 @@ struct GroupMainPage: View {
                 return
             }
             
-            // Usamos DispatchQueue.main para actualizar en el hilo principal
             var tempGroups: [Group] = []
-            let dispatchGroup = DispatchGroup() // Para manejar la sincronización
+            let dispatchGroup = DispatchGroup()
             
             for doc in documents {
-                dispatchGroup.enter() // Inicia la espera para cada grupo
+                dispatchGroup.enter()
                 
                 let data = doc.data()
                 fetchParticipantes(groupId: doc.documentID) { participantes in
@@ -137,7 +137,7 @@ struct GroupMainPage: View {
                     )
                     
                     tempGroups.append(group)
-                    dispatchGroup.leave() // Finaliza la espera para este grupo
+                    dispatchGroup.leave()
                 }
             }
             
@@ -164,8 +164,7 @@ struct GroupMainPage: View {
         }
     }
 }
-
-
+     
 struct GroupMainPage_Previews: PreviewProvider {
     static var previews: some View {
         GroupMainPage()

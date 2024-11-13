@@ -14,6 +14,7 @@
 		842EF1BC2CE0563D00F84EDE /* firstProyectinXcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1BB2CE0563D00F84EDE /* firstProyectinXcodeTests.swift */; };
 		842EF1C62CE0563D00F84EDE /* firstProyectinXcodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C52CE0563D00F84EDE /* firstProyectinXcodeUITests.swift */; };
 		842EF1C82CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */; };
+		842F27FD2CE4263A001F49B3 /* DaysCalendarBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F27FC2CE4263A001F49B3 /* DaysCalendarBar.swift */; };
 		843E82C02CE2C04900E6BF53 /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */; };
 		843E82C22CE2C12200E6BF53 /* OpcionesGrupoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */; };
 		846DF4162CE2D02E001C927E /* CrearGrupoPrivadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */; };
@@ -94,6 +95,7 @@
 		842EF1C12CE0563D00F84EDE /* firstProyectinXcodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = firstProyectinXcodeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		842EF1C52CE0563D00F84EDE /* firstProyectinXcodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITests.swift; sourceTree = "<group>"; };
 		842EF1C72CE0563D00F84EDE /* firstProyectinXcodeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstProyectinXcodeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		842F27FC2CE4263A001F49B3 /* DaysCalendarBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DaysCalendarBar.swift; path = firstProyectinXcode/Context/DaysCalendarBar.swift; sourceTree = SOURCE_ROOT; };
 		843E82BF2CE2C04900E6BF53 /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
 		843E82C12CE2C12200E6BF53 /* OpcionesGrupoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcionesGrupoView.swift; sourceTree = "<group>"; };
 		846DF4152CE2D02E001C927E /* CrearGrupoPrivadoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearGrupoPrivadoView.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 		84E3E4E12CE14CB70029CBFD /* Estadistics */ = {
 			isa = PBXGroup;
 			children = (
+				842F27FC2CE4263A001F49B3 /* DaysCalendarBar.swift */,
 			);
 			path = Estadistics;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				84E457702CE0713A0080E7CF /* HomePage.swift in Sources */,
 				842EF1AD2CE0563400F84EDE /* ContentView.swift in Sources */,
 				846DF4162CE2D02E001C927E /* CrearGrupoPrivadoView.swift in Sources */,
+				842F27FD2CE4263A001F49B3 /* DaysCalendarBar.swift in Sources */,
 				84E4576A2CE070A10080E7CF /* AuthState.swift in Sources */,
 				84E457802CE074DC0080E7CF /* LoginPage.swift in Sources */,
 				84E457782CE072170080E7CF /* ProfilePhotoPage.swift in Sources */,
