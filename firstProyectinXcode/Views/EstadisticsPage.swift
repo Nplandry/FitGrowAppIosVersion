@@ -2,7 +2,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-struct EstadisticsView: View {
+struct EstadisticsInfo: View {
     
     @State private var groupsData: [Group] = []
     @State private var participantsData: [ParticipantsData] = []
@@ -235,6 +235,6 @@ struct EstadisticsView: View {
 
 struct EstadisticsView_Previews: PreviewProvider {
     static var previews: some View {
-        EstadisticsView()
+        EstadisticsInfo()
     }
 }

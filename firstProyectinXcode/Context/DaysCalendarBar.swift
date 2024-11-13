@@ -8,64 +8,75 @@ struct DaysCalendarBar: View {
 
     let lifts: [Lift]
 
+    // Color dinámico dependiendo del modo
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
-        VStack {
-            // Week Navigation
-            HStack {
-                Button(action: goToPreviousWeek) {
-                    Text("Semana Anterior")
+        ScrollView {
+            VStack {
+                // Navegación de semanas
+                HStack {
+                    Button(action: goToPreviousWeek) {
+                        Text("Semana Anterior")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.gray.opacity(0.8))
+                            .cornerRadius(8)
+                    }
+
+                    Text("Semana \(currentWeekIndex + 1)")
                         .foregroundColor(.white)
+                        .font(.headline)
                         .padding()
-                        .background(Color.gray)
-                        .cornerRadius(8)
-                }
 
-                Text("Semana \(currentWeekIndex + 1)")
-                    .foregroundColor(.white)
-                    .padding()
-
-                Button(action: goToNextWeek) {
-                    Text("Próxima Semana")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.gray)
-                        .cornerRadius(8)
-                }
-            }
-
-            // Week Days Display
-            HStack {
-                ForEach(0..<selectedWeek.count, id: \.self) { index in
-                    let day = selectedWeek[index]
-                    VStack {
-                        Text("\(Calendar.current.component(.day, from: day)) Nov")
-                            .foregroundColor(.black)
-                        Circle()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.gray)
-                            .onTapGesture {
-                                setSelectedDay(day)
-                            }
+                    Button(action: goToNextWeek) {
+                        Text("Próxima Semana")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.gray.opacity(0.8))
+                            .cornerRadius(8)
                     }
                 }
-            }
-            .padding(.top)
+                .padding()
 
-            // Lift planner component
-            PlanificadorDeCarga(lifts: lifts)
+                // Mostrar los días de la semana
+                HStack {
+                    ForEach(0..<selectedWeek.count, id: \.self) { index in
+                        let day = selectedWeek[index]
+                        VStack {
+                            Text("\(Calendar.current.component(.day, from: day)) Nov")
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
+                            Circle()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(selectedDay == day ? Color.blue : Color.gray)
+                                .onTapGesture {
+                                    setSelectedDay(day)
+                                }
+                        }
+                    }
+                }
+                .padding(.top)
 
-            // Display filtered lifts
-            List(filteredLifts) { lift in
-                Text("\(lift.nombreEjercicio): \(lift.peso)kg x \(lift.repeticiones) repeticiones")
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(8)
-                    .padding(.bottom, 5)
+                // Componente Planificador de Carga
+                PlanificadorDeCarga(lifts: lifts)
+
+                // Mostrar lifts filtrados
+                VStack {
+                    ForEach(filteredLifts) { lift in
+                        Text("\(lift.nombreEjercicio): \(lift.peso)kg x \(lift.repeticiones) repeticiones")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                            .padding(.bottom, 5)
+                    }
+                }
+                .padding()
+
             }
-            .padding()
+            .onAppear(perform: loadWeekDates)
         }
-        .onAppear(perform: loadWeekDates)
+        .background(colorScheme == .dark ? Color.black : Color.white) // Fondo general
     }
 
     private func goToNextWeek() {
@@ -114,8 +125,13 @@ struct PlanificadorDeCarga: View {
     var lifts: [Lift]
 
     var body: some View {
-        Text("Planificador de carga aquí")
-            .padding()
+        VStack {
+            Text("Planificador de carga aquí")
+                .font(.headline)
+                .padding()
+
+            EstadisticsInfo() // Este puede ser otro componente con estadísticas
+        }
     }
 }
 
@@ -128,4 +144,3 @@ struct DaysCalendarBar_Previews: PreviewProvider {
         DaysCalendarBar(lifts: sampleLifts)
     }
 }
-
