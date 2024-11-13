@@ -132,7 +132,7 @@ struct DaysCalendarBar: View {
 
     private func loadAllLifts() {
         let db = Firestore.firestore()
-        db.collection("lifts").getDocuments { snapshot, error in
+        db.collection("ejercicios").getDocuments { snapshot, error in
             if let error = error {
                 self.error = "Error al cargar los lifts: \(error.localizedDescription)"
                 self.loading = false
@@ -152,16 +152,23 @@ struct DaysCalendarBar: View {
                    let peso = data["peso"] as? Int,
                    let repeticiones = data["repeticiones"] as? Int,
                    let timestamp = data["timestamp"] as? Timestamp,
-                   let nombre = data["nombre"] as? String, // Extraemos el nombre del usuario
-                   let groupId = data["groupId"] as? String { // Asegúrate de incluir el groupId
+                   let nombre = data["nombre"] as? String,
+                   let groupId = data["groupId"] as? String {
                     let lift = Lift(id: doc.documentID, nombreEjercicio: nombreEjercicio, peso: peso, repeticiones: repeticiones, timestamp: timestamp.dateValue(), nombreUsuario: nombre, groupId: groupId)
                     tempLifts.append(lift)
                 }
             }
-            self.allLifts = tempLifts // Guardar todos los lifts de todos los grupos
+            self.allLifts = tempLifts
             self.loading = false
+
+            // Imprimir todos los grupos (lifts)
+            print("Lifts obtenidos:")
+            for lift in self.allLifts {
+                print("Grupo ID: \(lift.groupId), Ejercicio: \(lift.nombreEjercicio), Peso: \(lift.peso), Repeticiones: \(lift.repeticiones), Usuario: \(lift.nombreUsuario)")
+            }
         }
     }
+
 }
 
 struct Lift: Identifiable {
