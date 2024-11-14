@@ -1,4 +1,5 @@
 import SwiftUI
+import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
@@ -7,10 +8,12 @@ struct DaysCalendarBar: View {
     @State private var currentWeekIndex = 0
     @State private var selectedWeek: [Date] = []
     @State private var filteredLifts: [Lift] = []
-    @State private var allLifts: [Lift] = [] // Aquí almacenamos todos los lifts de todos los grupos
+    @State private var allLifts: [Lift] = [] // Todos los lifts de todos los grupos
     @State private var loading = true
     @State private var error: String? = nil
-
+    @State private var userName: String = ""
+    @State private var userId: String = ""
+    
     @Environment(\.colorScheme) var colorScheme
     
     private var db = Firestore.firestore() // Firestore instance
@@ -62,7 +65,7 @@ struct DaysCalendarBar: View {
                 .padding(.top)
 
                 // Componente Planificador de Carga
-                PlanificadorDeCarga(lifts: allLifts)
+                PlanificadorDeCarga(lifts: filteredLifts)
 
                 // Mostrar lifts filtrados
                 VStack {
@@ -81,6 +84,7 @@ struct DaysCalendarBar: View {
             .onAppear(perform: loadWeekDates)
             .onAppear {
                 if let userId = Auth.auth().currentUser?.uid {
+                    loadUserData(userId: userId) // Cargar los datos del usuario
                     loadAllLifts() // Cargar todos los lifts
                 }
             }
@@ -158,17 +162,45 @@ struct DaysCalendarBar: View {
                     tempLifts.append(lift)
                 }
             }
-            self.allLifts = tempLifts
-            self.loading = false
 
-            // Imprimir todos los grupos (lifts)
-            print("Lifts obtenidos:")
-            for lift in self.allLifts {
-                print("Grupo ID: \(lift.groupId), Ejercicio: \(lift.nombreEjercicio), Peso: \(lift.peso), Repeticiones: \(lift.repeticiones), Usuario: \(lift.nombreUsuario)")
+            // Verifica que los lifts estén bien cargados
+            print("Lifts obtenidos desde Firestore: \(tempLifts.count)")
+            for lift in tempLifts {
+                print("Lift cargado: \(lift.nombreEjercicio), \(lift.peso)kg, \(lift.repeticiones) repeticiones")
             }
+
+            // Filtra los lifts por grupo
+            let groupIdFilter = "POTO" // El grupo que quieres filtrar
+            self.allLifts = tempLifts.filter { $0.groupId == groupIdFilter }
+            print("Lifts filtrados por grupo \(groupIdFilter): \(self.allLifts.count)")
+            for lift in self.allLifts {
+                print("Lift filtrado: \(lift.nombreEjercicio), \(lift.peso)kg, \(lift.repeticiones) repeticiones")
+            }
+
+            self.loading = false
         }
     }
 
+    private func loadUserData(userId: String) {
+        let db = Firestore.firestore()
+        db.collection("users").document(userId).getDocument { snapshot, error in
+            if let error = error {
+                print("Error al cargar datos del usuario: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = snapshot?.data() else {
+                print("No se encontraron datos del usuario")
+                return
+            }
+
+            if let name = data["nombre"] as? String {
+                self.userName = name
+            }
+
+            print("Datos del usuario cargados - ID: \(userId), Nombre: \(userName)")
+        }
+    }
 }
 
 struct Lift: Identifiable {
@@ -190,7 +222,7 @@ struct PlanificadorDeCarga: View {
                 .font(.headline)
                 .padding()
 
-            EstadisticsInfo() // Este puede ser otro componente con estadísticas
+            EstadisticsInfo() // Usar tu componente EstadisticsView para mostrar estadísticas
         }
     }
 }

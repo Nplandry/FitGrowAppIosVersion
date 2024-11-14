@@ -59,8 +59,6 @@ struct EstadisticsInfo: View {
                         Text("Progresión de tus ejercicios:")
                             .font(.title)
                             .padding(.top)
-                        
-                        
 
                         ForEach(calcularProgresionPorEjercicio(), id: \.nombreEjercicio) { liftProgresado in
                             VStack(alignment: .leading, spacing: 4) {
@@ -148,8 +146,7 @@ struct EstadisticsInfo: View {
         
         groupsRef.getDocuments { snapshot, error in
             if let error = error {
-                print("Error al obtener los grupos:", error)
-                self.error = "Error al obtener los grupos"
+                self.error = "Error al obtener los grupos: \(error.localizedDescription)"
                 self.loading = false
             } else {
                 var grupos: [Group] = []
