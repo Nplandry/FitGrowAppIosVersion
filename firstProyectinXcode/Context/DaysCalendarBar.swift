@@ -170,8 +170,8 @@ struct DaysCalendarBar: View {
                         // Comprobar si el timestamp está dentro del rango de fechas
                         let ejercicioDate = timestamp.dateValue()
                         print("Fecha del ejercicio: \(ejercicioDate)")
-                        
-                        if ejercicioDate >= startOfDay && ejercicioDate < endOfDay {
+                        /**if ejercicioDate >= startOfDay && ejercicioDate < endOfDay {**/
+                        if true {
                             // Retorna el ejercicio si cumple con el filtro de fecha
                             print("Ejercicio filtrado: \(nombreEjercicio), \(peso), \(repeticiones), \(ejercicioDate)")
                             return Lift(id: doc.documentID,
