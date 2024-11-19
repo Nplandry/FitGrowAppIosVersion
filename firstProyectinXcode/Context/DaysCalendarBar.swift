@@ -188,7 +188,7 @@ struct DaysCalendarBar: View {
                     return nil // Si no cumple, no se agrega a la lista
                 }
                 
-                // Imprimir los ejercicios filtrados
+              
                 print("Ejercicios filtrados: \(filteredLifts)")
                 
                 // Asigna los ejercicios filtrados
