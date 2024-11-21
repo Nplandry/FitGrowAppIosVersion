@@ -8,6 +8,8 @@ struct DaysCalendarBar: View {
     @State private var currentWeekIndex = 0
     @State private var selectedWeek: [Date] = []
     @State private var liftsForSelectedDay: [Lift] = [] // Lifts para el día seleccionado
+
+
     
     @State private var loading = true
     @State private var error: String? = nil
